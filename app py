@@ -1,0 +1,25 @@
+import schedule
+import time
+from services.facebook import post_to_facebook
+from services.linkedin import post_to_linkedin
+from services.ai import generate_content
+
+def job():
+    print("Generating content...")
+    content = generate_content()
+
+    print("Posting to platforms...")
+    post_to_facebook(content)
+    post_to_linkedin(content)
+
+    print("Done.\n")
+
+# Schedule (every day at 9 AM)
+schedule.every().day.at("09:00").do(job)
+
+if __name__ == "__main__":
+    print("AI Social Agent started...")
+
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
